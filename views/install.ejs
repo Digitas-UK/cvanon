@@ -1,0 +1,28 @@
+<!DOCTYPE html><html lang="en"><head><title>Smart Recruiters - CV Anonymising Tool POC - Installation</title><meta charSet="utf-8" /></head>
+<body>
+<h2>Smart Recruiters - CV Anonymising Tool - Browser "Bookmarklet" Installation</h2>
+<p>This tool allows you to generate an anonymised CV for smart recruiters candidates</p>
+<h3>Installing the Bookmarklet</h3>
+<p>Drag this link <STRONG> <a href="javascript:(function(){ const uri = '<%=baseUrl%>'; if (document.URL.startsWith('https://www.smartrecruiters.com/app/people/applications/')) { const viewAllButton = document.evaluate(`//button[text()='View all']`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue; const candidateId = viewAllButton.attributes.href.value.split('/')[4].split('?')[0]; const jobLink = document.getElementById('st-jobNameLinkOnApplicantPagePA'); const jobId = jobLink.attributes.href.value.split('/')[4]; window.open(`${uri}/${candidateId}?jobId=${jobId}`); } else if (document.URL.startsWith('https://www.smartrecruiters.com/app/people/candidates/')) { const candidateId = document.URL.split('/')[6].split('?')[0]; window.open(`${uri}/${candidateId}`); } else { window.alert('Please select a Smart Recruiters candidate application or candidate'); }})();">CV Anon</a> </STRONG> up to your Bookmark bar. It will create a bookmark button in the toolbar.</p>
+<p>This button can be used on the following Smart Recruiters pages:</p>
+<ol>
+    <li>Candidate application page (where URL starts with /app/people/applications/)</li>
+    <li>Candidate page (where URL starts with /app/people/candidates/)</li>
+</ol>
+<p>It will download a file (.docx) which you can open using Microsoft Word for review and further editing.</p>
+
+<h3>How to turn on the Bookmark/Favorites toolbar?</h3>
+<p></p>If you don't have the bookmark bar / favorites toolbar, follow these steps to turn it on.</p>
+<h4>Chrome users:</h4>
+<ol>
+    <li>At the top right, click More (three dots)</li>
+    <li>Select Bookmarks > Show Bookmarks Bar</li>
+</ol>
+
+<h4>Firefox users:</h4>
+<ol>
+    <li>Click View > Toolbars</li>
+    <li>Select Bookmarks Toolbar</li>
+</ol>
+</body>
+</html>

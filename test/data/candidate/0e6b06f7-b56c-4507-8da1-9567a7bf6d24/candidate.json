@@ -1,0 +1,124 @@
+{
+    "id": "0e6b06f7-b56c-4507-8da1-9567a7bf6d24",
+    "internal": false,
+    "firstName": "Fake",
+    "lastName": "Name",
+    "email": "fakename@hotmail.com",
+    "phoneNumber": "+4479000 00000",
+    "location": {
+        "city": "London"
+    },
+    "web": {
+        "linkedin": "https://www.linkedin.com/in/fakename-0000000"
+    },
+    "createdOn": "2018-05-09T07:30:22.000Z",
+    "updatedOn": "2020-09-29T13:18:03.000Z",
+    "education": [
+        {
+            "institution": "Christminster University",
+            "degree": "Diploma in Japanese",
+            "major": "Japanese",
+            "current": false,
+            "location": "London",
+            "startDate": "2007-09-01",
+            "endDate": "2007-12-01"
+        }
+    ],
+    "experience": [
+        {
+            "title": "Creative Director",
+            "company": "Wayne Enterprises",
+            "current": true,
+            "location": ", , ",
+            "startDate": "2020-03-01",
+            "description": "Illustrator for The Weekly Volcano magazine.\n\nIllustrator/Scriptwriter for a strategic comms agency in Amsterdam. Creating a series of animations for children about post-carbon energy.\n\nIllustrator for Sharky &amp; George events company.\n\nDirector/Creative Director TV commercial for new shopping app."
+        },
+        {
+            "title": "Creative Director",
+            "company": "Cyberdyne Systems",
+            "current": false,
+            "location": ", , ",
+            "startDate": "2018-09-01",
+            "endDate": "2020-03-01",
+            "description": "Producing cinematic documentaries, interactive videos, dynamic stills, CGI animation and other high quality content for top 10 Pharma &amp; Healthcare clients.\nOriginating creative ideas, scriptwriting, storyboarding &amp; directing film shoots all over the world."
+        },
+        {
+            "title": "Senior Producer/Director - Branded Content",
+            "company": "Gekko & Co",
+            "current": false,
+            "location": ", , ",
+            "startDate": "2017-09-01",
+            "endDate": "2018-08-01",
+            "description": "Senior Producer/Director of various short documentaries:\nProducer/Director of a 8-day live event in The Bahamas. Writing treatments and pitching ideas to stakeholders.\nProduced Social Media creative campaigns (illustration, stills, video and animation)."
+        },
+        {
+            "title": "Creative Director",
+            "company": "Acme Corp",
+            "current": false,
+            "location": ", , ",
+            "startDate": "2014-05-01",
+            "endDate": "2017-09-01",
+            "description": "Working with a range and advertising and media clients, including:"
+        },
+        {
+            "title": "Creative Director",
+            "company": "Stark Industries",
+            "current": false,
+            "location": "London",
+            "startDate": "2014-05-01",
+            "endDate": "2017-09-01",
+            "description": "Director/Producer/Writer of various TV ads and marketing films for companies like Genco Pura Olive Oil Company, The New York Inquirer & Duff Beer"
+        },
+        {
+            "title": "Senior Director/ Producer of TV",
+            "company": "Ollivander's Wand Shop",
+            "current": false,
+            "location": ", , ",
+            "startDate": "2014-10-01",
+            "endDate": "2017-01-01",
+            "description": "commercials for new Ollivander product launches, internal communication reels and YouTube online content (including pop videos and talent interviews)."
+        },
+        {
+            "title": "Writer/Producer",
+            "company": "Wonka Industries",
+            "current": false,
+            "location": ", , ",
+            "startDate": "2015-03-01",
+            "endDate": "2015-04-01",
+            "description": "Created internal reels for new channel launches"
+        }
+    ],
+    "actions": {
+    },
+    "primaryAssignment": {
+        "status": "IN_REVIEW",
+        "subStatus": "Resume Review",
+        "source": "Some Employment Agency Name",
+        "actions": {
+        },
+        "job": {
+            "id": "64510a0f-2ad7-49e9-b5ae-fb75fdbc0b08",
+            "title": "Creative Director (Copy) - Advertising",
+            "actions": {
+            }
+        }
+    },
+    "secondaryAssignments": [
+        {
+            "status": "REJECTED",
+            "source": "Some Employment Agency Name",
+            "reasonOfRejection": {
+                "id": "did_not_meet_minimum_qualifications",
+                "label": "Did not meet minimum qualifications"
+            },
+            "actions": {
+            },
+            "job": {
+                "id": "d2f44239-5ebe-44ea-96ab-97bd90889b3c",
+                "title": "Senior Content Producer",
+                "actions": {
+                }
+            }
+        }
+    ]
+}

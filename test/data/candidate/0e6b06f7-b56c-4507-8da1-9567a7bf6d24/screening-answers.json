@@ -1,0 +1,28 @@
+{
+    "totalFound": 1,
+    "content": [
+        {
+            "id": "939f5a59-2c4e-41ef-b1f9-e401fa5a58bd",
+            "type": "radio",
+            "category": "29f34fb3-dbc2-4710-a76f-37b79b9cd047",
+            "name": "Employment Visa Status",
+            "label": "Will you now or in the future require sponsorship for employment visa status?",
+            "records": [
+                {
+                    "fields": [
+                        {
+                            "id": "value",
+                            "label": "Value",
+                            "values": [
+                                {
+                                    "id": "0",
+                                    "label": "No"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

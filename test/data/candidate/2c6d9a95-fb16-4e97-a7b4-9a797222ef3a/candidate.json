@@ -1,0 +1,125 @@
+{
+    "id": "2c6d9a95-fb16-4e97-a7b4-9a797222ef3a",
+    "internal": false,
+    "firstName": "Joe",
+    "lastName": "Bloggs",
+    "email": "joe.bloggs@somewhere.net",
+    "phoneNumber": "+44 000 0000 0000",
+    "location": {
+        "country": "Pakistan",
+        "city": "Islamabad, Islāmābād, Pakistan",
+        "lat": 0,
+        "lng": 0
+    },
+    "web": {
+        "linkedin": "https://www.linkedin.com/in/idontexist"
+    },
+    "createdOn": "2020-06-25T09:15:44.000Z",
+    "updatedOn": "2020-11-05T17:29:06.000Z",
+    "education": [
+        {
+            "institution": "University of Bantshire",
+            "degree": "Master's Degree",
+            "major": "Web solutions, Information Systems,Database",
+            "current": false,
+            "location": "",
+            "startDate": "2009-01-01",
+            "endDate": "2011-12-01"
+        },
+        {
+            "institution": "Borchester University",
+            "degree": "Bachelor's Degree",
+            "major": "Computer Science",
+            "current": false,
+            "location": "",
+            "startDate": "2007-01-01",
+            "endDate": "2009-12-01"
+        }
+    ],
+    "experience": [
+        {
+            "title": "Software Development Lead",
+            "company": "Wonka Industries",
+            "current": true,
+            "location": ", , ",
+            "startDate": "2018-05-01",
+            "description": "Technology:  ERP/ CRM /MIS[ REST FULL Architecture, Cloud hosting management ,Eloquent / Doctrine ORM, Dockers, Github, MVC Framework, MySQL InnoDB,\nPostgresql]\n\nResponsibilities\nDelivered 5 Successful Projects from last year of more then 10 million revenue  and getting best Employee Bonus and Rewards\n Managing 3 Projects and Lead Team of 7 - 9 Resources\n Involved in Software Development Life Cycle (requirement & analysis, Design, Development, Testing, Deployment )\nPost-Deployment (Installation, Configuration, Maintenance, Execution, Data Migration, Reporting’s)\nRequirements Elicitation / Requirement Gathering\nTaking Meeting Minutes / Notes in Meetings\nCreating and involve  SRS, Use Cases, Test Cases & Project Plan \nScrum Meeting with CEO and Technical Team .User Stories and Task Assignment on JIRA/Trilo\nLeading Daily Scrum Meeting with Team, Sprint Planning, Sprint / Product Backlog Refinement, \n Backlog Grooming, Sprint Review and Sprint Retrospective\nMonitoring Juniors Developer ,Support team, UI/UX Designer ,QA Team,devops in project Dynamic Phases\nCapable of meeting deadlines while ensuring quality under pressure\n Strong conceptualization and visual communication ability\n\nFurthermore\nCompany Major Projects with United Nation, USAID ,World Food Program and government/NGO’s\nWorld Food Program Funding:\nNDMA/PDMA Project Multi Warehouse Management System for more than 20 Location Pakistan. \nFirst Volunteer System with PRCS Pakistan Red Crescent 1 million Volunteer help in CRONA / Disaster \n\nGoogle map event for security company visual displaying incidents, events, boom-blost. ln cluster and polygon \nHr- consultancy Students CRM  data from many platforms and distribute workflow and project management"
+        },
+        {
+            "title": "Technical Lead/ Senior Web Engineer",
+            "company": "Acme Corp",
+            "current": false,
+            "location": ", , ",
+            "startDate": "2015-09-01",
+            "endDate": "2017-09-01",
+            "description": "Technology: SAP ERP Product (ANGULAR JS, PHP REST FULL Architecture, Slim Framework, Memcached, and MySQL InnoDB)\n\nResponsibilities:\n\n•\tClone of SAP ERP Product Cloud Level having AWS Integration 10 Major Web Modules for Multi-level companies. \n•\tFunctioned under Supervision of Microsoft Dynamic CRM AX, Oracle and SAP, Big Data, Odoo, ERP Next, Consultants.\n•\tHandled Mid-Level organization having B2B concept sales & distribution.\n•\tAnalyzed information to recommend and plan the installation of new systems or modifications of an existing system.\n•\tManaged the complete development life-cycle of the software systems, including gathering requirements, database management, software development, testing, implementation, user follows up, support and projects.\n•\tPerformed program maintenance, modifications, and enhancements to new/existing systems through programming, testing, documenting, and training users.\n•\tDirected design sessions and development quality through mentor ship and code reviews. Designed, implemented, tested, debugged and provided ongoing support for system software that meets technical and customer requirements. \n•\tImproved all aspects of the technical development cycle, including functional and technical product specifications, testing and quality assurance, requirement & analysis, documentation and configuration management.\n\nMajor Modules \n(Sales and Distribution, Material Management, CRM/SRM, Sale Target/ Forecasting, Supply Chain\nInventory, General Ledger and Finance Accounts, Project System, HR, Data Migration)\n\nCommunication \n(Task, Contact, Centralized Document Management, Event Calendar, Chat and SMS and Web Mail)"
+        },
+        {
+            "title": "Software Developer & Analyist",
+            "company": "Stark Industries",
+            "current": false,
+            "location": ", , ",
+            "startDate": "2014-03-01",
+            "endDate": "2015-08-01",
+            "description": "Technology: University MIS System (PHP MVC, MS-SQL Server 2008, MS Access for BIO Metric Attendance & GSM SMS)\n\nResponsibilities:\n•\tUniversity MIS system for university MIS, HR, Payroll, Portals, with Email/SMS Notification|30+ Reports (PDF | Excel).\n•\tImproved existing systems and developed new system modules deployed and error free ongoing.\n•\tDirecting software programming and documentation development.\n•\tWorked with departments on technical issues including software system design and maintenance.\n•\tPrepared reports on programming project specifications, activities, or status.\n\n\nMajor Modules (Team Work and System Anlysis)\n- Human Resource (HRMS).- Employee System (EMS)\n- Payroll Management System (PMS)- Jobs Portal system (JMS)\n- Procurement and Inventory\n- Admission & Assesments - Student Profile and Information\n- Fee Billing - Library Management- Exam Management\n- Parent/Teacher /Student\n- Users Roles and Managment - Biometric Atendance\n- Email / SMS to Notification\n- Reports ( 30 + Reports) in PDF | Excel | Word"
+        },
+        {
+            "title": "Web Developer",
+            "company": "Ollivander's Wand Shop",
+            "current": false,
+            "location": ", , ",
+            "startDate": "2012-02-01",
+            "endDate": "2014-01-01",
+            "description": "Technology: Custom PHP, OOP, MVC, WordPress, Open Cart, Cloud Based JSON CMS\n\nResponsibilities:\n\n•\tUpdated and implemented pages and back-end using HTML, CSS and PHP for a website.\n•\tIntegrated data from various back-end services and databases.\n•\tImplemented testing tools that monitored the ongoing performance of the company website.\n•\tFix bugs from existing websites and implemented enhancements that significantly improve web functionality.\n•\tPerformed weekly assessments of all websites and software to look for potential problems or crashes.\n•\tWorked remotely and communicated directly with clients.\n•\tImproved the maintained efficiency by reconstructing official website with modern technologies and framework.\n•\tInvolved in all stages of the development life cycle: initial analysis, implementation, integration, testing, debugging and support.\n•\tBeginner level web services, social media payment methods.\n\n\nMajor Projects (Team Work)\n•\tComplaint Management \n•\tLearning Management \n•\tTraining Management \n•\tSales System \n•\tCorporate E-Commerce System \n•\tShopping Carts \n•\tContent Management System"
+        }
+    ],
+    "actions": {
+    },
+    "primaryAssignment": {
+        "status": "IN_REVIEW",
+        "subStatus": "Resume Review",
+        "source": "Some Employment Agency Name",
+        "actions": {
+        },
+        "job": {
+            "id": "64510a0f-2ad7-49e9-b5ae-fb75fdbc0b08",
+            "title": "Full Stack Web Developer",
+            "actions": {
+            }
+        }        
+    },
+    "secondaryAssignments": [
+        {
+            "status": "REJECTED",
+            "source": "LinkedIn Limited Listings",
+            "reasonOfRejection": {
+                "id": "more_qualified_candidate_selected",
+                "label": "More qualified candidate selected"
+            },
+            "actions": {
+            },
+            "job": {
+                "id": "e555d45c-671d-45a1-af09-671b7a63a3cb",
+                "title": "Software Engineer",
+                "actions": {
+                }
+            }
+        },
+        {
+            "status": "REJECTED",
+            "source": "LinkedIn Limited Listings",
+            "reasonOfRejection": {
+                "id": "other",
+                "label": "Other"
+            },
+            "actions": {
+            },
+            "job": {
+                "id": "23dc7bf7-b4e6-48c4-92e9-91b1ab36ff22",
+                "title": "Ecommerce Manager",
+                "actions": {
+                }
+            }
+        }
+    ]
+}

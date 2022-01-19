@@ -1,0 +1,22 @@
+{
+    "id": "64510a0f-2ad7-49e9-b5ae-fb75fdbc0b08",
+    "title": "Creative Director (Copy) - Advertising",
+    "refNumber": "PS82681",
+    "status": "SOURCING",
+    "createdOn": "2020-12-02T19:33:14.000Z",
+    "lastActivityOn": "2021-01-06T11:40:13.579Z",
+    "department": {
+        "id": "1090744",
+        "label": "Commerce"
+    },
+    "location": {
+        "countryCode": "gb",
+        "country": "United Kingdom",
+        "region": "England",
+        "city": "London",
+        "address": "Some Street",
+        "manual": false,
+        "remote": false,
+        "regionCode": "England"
+    }
+}

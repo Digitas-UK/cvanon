@@ -1,0 +1,8 @@
+{
+    "message": "Not permitted to see this candidate",
+    "errors": [
+        {
+            "code": "PERMISSION_DENIED"
+        }
+    ]
+}

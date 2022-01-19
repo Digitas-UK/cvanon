@@ -1,0 +1,10 @@
+{
+    "error":{
+       "path":"/candidates/0d358a21-64e8-4393-8fee-a71e72fe5683",
+       "reason":"proxy/status",
+       "status":503
+    },
+    "message":"Smart Recruiters API is currently unavailable. Please try again later",
+    "status":503,
+    "type":"error"
+ }

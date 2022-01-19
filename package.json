@@ -1,0 +1,34 @@
+{
+  "name": "gcloud-candidate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "docxtemplater": "^3.19.7",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "https": "^1.0.0",
+    "perf_hooks": "0.0.1",
+    "pizzip": "^3.0.6"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^7.14.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "mocha": "^9.1.3",
+    "nock": "^13.0.5",
+    "nodemon": "^2.0.6",
+    "nyc": "^15.1.0"
+  },
+  "scripts": {
+    "start": "node index.js",    
+    "devStart": "nodemon --ext 'js,json,ejs' index.js",
+    "pretest": "eslint --ignore-path .gitignore .",
+    "test": "nyc mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

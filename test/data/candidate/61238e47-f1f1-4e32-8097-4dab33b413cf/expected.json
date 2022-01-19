@@ -1,0 +1,10 @@
+{
+    "error":{
+       "path":"/candidates/61238e47-f1f1-4e32-8097-4dab33b413cf",
+       "reason":"proxy/status",
+       "status":429
+    },
+    "message":"The Smart Recruiters API rate limit has been exceeded. Please try again in a few seconds.",
+    "status":429,
+    "type":"warning"
+ }
