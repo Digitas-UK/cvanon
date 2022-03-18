@@ -4,8 +4,12 @@
 const assert = require('chai').assert;
 const controller = require('../controller.js');
 const nock = require('nock');
+const sinon = require('sinon');
 
 describe('controller', () => {
+  // Make new Date() return a fixed date
+  sinon.useFakeTimers(new Date('2022-01-19').getTime());
+
   describe('#getContext()', () => {
     describe('#getContext() with defaults', () => {
       const testContext = controller._getContext({

@@ -2,9 +2,12 @@
 'use strict';
 
 const assert = require('chai').assert;
+const sinon = require('sinon');
 const adaptor = require('../adaptor.js');
 
 describe('adaptor', () => {
+  // Make new Date() return a fixed date
+  sinon.useFakeTimers(new Date('2022-01-19').getTime());
 
   describe('#candidate()', () => {
     describe('#candidate() with minimal input', () => {
@@ -195,6 +198,14 @@ describe('adaptor', () => {
       startDate: '2000-01',
       endDate: '2001-12',
     }), '2 years'));
+    it('should return 1 month for current', () => assert.equal(adaptor._calculateDuration({
+      startDate: '2022-01',
+      current: true,
+    }), '1 month'));
+    it('should return 1 year for current', () => assert.equal(adaptor._calculateDuration({
+      startDate: '2021-02',
+      current: true,
+    }), '1 year'));
   });
 
   describe('#genderNeutralise()', () => {
