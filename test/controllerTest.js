@@ -6,6 +6,9 @@ const controller = require('../controller.js');
 const nock = require('nock');
 const sinon = require('sinon');
 
+const TEST_PARAGRAPH = 'test paragraph content';
+const TEST_BULLET = 'test bullet content';
+
 describe('controller', () => {
   // Make new Date() return a fixed date
   sinon.useFakeTimers(new Date('2022-01-19').getTime());
@@ -187,6 +190,62 @@ describe('controller', () => {
     it('should return false for empty string', () => assert.isFalse(controller._isUUID('')));
     it('should return false for a non-guid', () => assert.isFalse(controller._isUUID('1234')));
     it('should return false for a number', () => assert.isFalse(controller._isUUID(9)));
+  });
+
+
+  describe('#addContentArrayForCandidate', () => {
+    it('should add content array of paragraphs and bullets for each position (using newline and asterix characters)', () => {
+      const testCandidate = {
+        positions: [
+          {
+            text: `${TEST_PARAGRAPH}\n\n* ${TEST_BULLET}\n*${TEST_BULLET}\n${TEST_PARAGRAPH}`,
+          },
+        ],
+      };
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 3);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
+      assert.deepEqual(testCandidate.positions[0].content[1], { bullets: [ TEST_BULLET, TEST_BULLET ] });
+      assert.deepEqual(testCandidate.positions[0].content[2], { paragraph: TEST_PARAGRAPH });
+    });
+
+    it('should add content array of paragraphs and bullets for each position (using newline, tab and "•" characters)', () => {
+      const testCandidate = {
+        positions: [
+          {
+            text: `•\t${TEST_BULLET}\n•\t${TEST_BULLET}\n${TEST_PARAGRAPH}`,
+          },
+        ],
+      };
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 2);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [ TEST_BULLET, TEST_BULLET ] });
+      assert.deepEqual(testCandidate.positions[0].content[1], { paragraph: TEST_PARAGRAPH });
+    });
+
+    it('should add content array of paragraphs and bullets for each position (with no formatting characters)', () => {
+      const testCandidate = {
+        positions: [
+          {
+            text: TEST_PARAGRAPH,
+          },
+        ],
+      };
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
+    });
+  });
+
+  describe('#htmlToContentArray', () => {
+    const contentArray = controller._htmlToContentArray(`<p>${TEST_PARAGRAPH}</p><ul><li>${TEST_BULLET}</li><li>${TEST_BULLET}</li></ul><p>${TEST_PARAGRAPH}</p>`);
+    it('array should contain 3 items', () => assert.equal(contentArray.length, 3));
+    it('first item should be a paragraph', () => assert.deepEqual(contentArray[0], { paragraph: TEST_PARAGRAPH }));
+    it('second item should be bullets', () => assert.deepEqual(contentArray[1], { bullets: [ TEST_BULLET, TEST_BULLET ] }));
+    it('third item should be a paragraph', () => assert.deepEqual(contentArray[2], { paragraph: TEST_PARAGRAPH }));
   });
 });
 

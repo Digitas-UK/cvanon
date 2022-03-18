@@ -202,4 +202,6 @@ module.exports = {
   _getContext: getContext,
   _getCandidateFilename: getCandidateFilename,
   _isUUID: isUUID,
+  _addContentArrayForCandidate: addContentArrayForCandidate,
+  _htmlToContentArray: htmlToContentArray,
 };
