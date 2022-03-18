@@ -1,3 +1,15 @@
+# Introduction
+
+The Blind CV tool allows recruiters to anonymise CVs before sending them to hiring managers in order to help prevent unconscious bias from affecting the recruitment process.
+
+The tool started life as a bespoke implementation tailored specifically to the needs of Publicis Groupe.
+
+It is explicitly tied to the recruitment platform that their Talent team use, Smart Recruiters, and has been built so that members of the Talent team can save the tool as a bookmarklet in their browser bookmarks.
+
+This means that when they are browsing a CV in Smart Recruiters that they think will be of interest to a hiring manager, they can simply click on the bookmarklet which scans the page, neutralises the relevant characteristics and generates an anonymised word document for the Talent team member to pass on.
+
+Please see below for detailed instructions on how to get up and running with the tool.
+
 # Pre-requisites
 
 - Your Smart Recruiters account API key
