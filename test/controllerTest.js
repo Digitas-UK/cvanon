@@ -238,6 +238,215 @@ describe('controller', () => {
       assert.equal(testCandidate.positions[0].content.length, 1);
       assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
     });
+
+    // Move to end
+
+    it('should fix sequential bullet characters (*)', () => {
+      const testCandidate = {positions: [{ text: `* ${TEST_BULLET} ** ${TEST_BULLET} *** ${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should fix sequential bullet characters (•)', () => {
+      const testCandidate = {positions: [{ text: `• ${TEST_BULLET} •• ${TEST_BULLET} ••• ${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should fix sequential bullet characters (• + \\n)', () => {
+      const testCandidate = {positions: [{ text: `• ${TEST_BULLET}\n•• ${TEST_BULLET}\n••• ${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should fix sequential bullet characters (•\\t + \\n)', () => {
+      const testCandidate = {positions: [{ text: `•\t${TEST_BULLET}\n••\t${TEST_BULLET}\n•••\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should handle an empty text', () => {
+      const testCandidate = {positions: [{ text: '' }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 0);
+    });
+
+
+    it('should add multiple paragraphs for text with newlines', () => {
+      const testCandidate = {positions: [{ text: TEST_PARAGRAPH + '\n' + TEST_PARAGRAPH }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 2);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
+      assert.deepEqual(testCandidate.positions[0].content[1], { paragraph: TEST_PARAGRAPH });
+    });
+
+    it('should add bullets for • (small bullet character) with newline (\\n•[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `•\t${TEST_BULLET}\n• ${TEST_BULLET}\n•\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should add bullets for • (small bullet character) without newline (•[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `•\t${TEST_BULLET} • ${TEST_BULLET} •\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should add bullets for ● (large bullet character) with newline (\\n●[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `●\t${TEST_BULLET}\n● ${TEST_BULLET}\n●\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should add bullets for ● (large bullet character) without newline (●[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `●\t${TEST_BULLET} ● ${TEST_BULLET} ●\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should add bullets for * (asterix) with newline (\\n*[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `*\t${TEST_BULLET}\n* ${TEST_BULLET}\n*\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should add bullets for * (asterix) without newline (*[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `*\t${TEST_BULLET} * ${TEST_BULLET} *\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should add bullets for - (dash) with newline (\\n-[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `-\t${TEST_BULLET}\n- ${TEST_BULLET}\n-\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should NOT add bullets for * (asterix) without newline (*[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `-\t${TEST_BULLET} - ${TEST_BULLET} -\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: '-\ttest bullet content - test bullet content -\ttest bullet content' });
+    });
+
+    it('should add paragraph and bullets for • (small bullet character) with newline (\\n•[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `${TEST_PARAGRAPH}\n•\t${TEST_BULLET}\n• ${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 2);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
+      assert.deepEqual(testCandidate.positions[0].content[1], { bullets: [TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should add paragraph and bullets for * (asterix) without newline (*[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `${TEST_PARAGRAPH} *\t${TEST_BULLET} * ${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 2);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
+      assert.deepEqual(testCandidate.positions[0].content[1], { bullets: [TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should add paragraph and bullets (mix of \\n\\n\\t• and \\n\\t•)', () => {
+      const testCandidate = {positions: [{ text: `${TEST_PARAGRAPH}\n\n\t• ${TEST_BULLET}\n\t• ${TEST_BULLET}\n\t• ${TEST_BULLET}\n\n\t• ${TEST_BULLET}\n\n\t• ${TEST_BULLET}\n\n\t• ${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 2);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
+      assert.deepEqual(testCandidate.positions[0].content[1], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET, TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should add bullets and paragraph for • (small bullet character) with newline (\\n•[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `•\t${TEST_BULLET}\n• ${TEST_BULLET}\n•${TEST_BULLET}\n${TEST_PARAGRAPH}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 2);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+      assert.deepEqual(testCandidate.positions[0].content[1], { paragraph: TEST_PARAGRAPH });
+    });
+
+    it('should add paragraph and bullets for * (asterix) without newline (*[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `*\t${TEST_BULLET} * ${TEST_BULLET}\n${TEST_PARAGRAPH}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 2);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET] });
+      assert.deepEqual(testCandidate.positions[0].content[1], { paragraph: TEST_PARAGRAPH });
+    });
+
+    it('should add paragraph, bullets and paragraph for • (small bullet character) with newline (\\n•[ \\t])', () => {
+      const testCandidate = {positions: [{ text: `${TEST_PARAGRAPH}\n•\t${TEST_BULLET}\n• ${TEST_BULLET}\n•${TEST_BULLET}\n${TEST_PARAGRAPH}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 3);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
+      assert.deepEqual(testCandidate.positions[0].content[1], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+      assert.deepEqual(testCandidate.positions[0].content[2], { paragraph: TEST_PARAGRAPH });
+    });
+
+    it('should remove leading spaces from bullet texts', () => {
+      const testCandidate = {positions: [{ text: `\t•\t${TEST_BULLET}\n\t•\t ${TEST_BULLET}\n\t•\t   ${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should remove trailing spaces and tabs from bullet texts', () => {
+      const testCandidate = {positions: [{ text: `•\t${TEST_BULLET}\t\n• ${TEST_BULLET}\t \t\n•\t${TEST_BULLET}   ` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
+    });
+
+    it('should subsitute newlines in bullet text to spaces (edge case for newlines within bullet point texts)', () => {
+      const testCandidate = {positions: [{ text: `•\t${TEST_BULLET}\n•\tbefore newline\nafter newline\n•\t${TEST_BULLET}` }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 1);
+      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, 'before newline after newline', TEST_BULLET] });
+    });
+
+    it('should handle multiple paragraph and bullet point sets (•)', () => {
+      const testCandidate = {positions: [{ text: 'Key achievements:\n•\tSuccessful development \n•\tWinning the RBS\n•\tSuccessful division\n\nResponsibilities:\n•\tDevelopment of a digital marketing website\n•\tProject management\n•\tManagement of agency timelines \n•\tManagement of staff' }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 4);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: 'Key achievements:' });
+      assert.deepEqual(testCandidate.positions[0].content[1], { bullets: ['Successful development', 'Winning the RBS', 'Successful division'] });
+      assert.deepEqual(testCandidate.positions[0].content[2], { paragraph: 'Responsibilities:' });
+      assert.deepEqual(testCandidate.positions[0].content[3], { bullets: ['Development of a digital marketing website' , 'Project management', 'Management of agency timelines', 'Management of staff'] });
+    });
+
+    it('should handle multiple paragraph and bullet point sets (•)', () => {
+      const testCandidate = {positions: [{ text: 'Trevor\'s role at E.ON is to assist in the growth of the B2C solutions.    *   Increased sales by 25% online with YoY increase of £1.2M    *   Operational cost savings of £400K per annum    *   Successful integration with BNPP finance partner increasing finance        applications for Heating and Photovolics' }]};
+      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 2);
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: 'Trevor\'s role at E.ON is to assist in the growth of the B2C solutions. ' });
+      assert.deepEqual(testCandidate.positions[0].content[1], { bullets: [  'Increased sales by 25% online with YoY increase of £1.2M',
+        'Operational cost savings of £400K per annum',
+        'Successful integration with BNPP finance partner increasing finance applications for Heating and Photovolics'
+      ]});
+    });
   });
 
   describe('#htmlToContentArray', () => {
