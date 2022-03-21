@@ -1,0 +1,118 @@
+[
+  {
+     "from":"Businessman",
+     "to":"Businessperson"
+  },
+  {
+     "from":"Cameraman",
+     "to":"Camera Operator"
+  },
+  {
+     "from":"Chairman",
+     "to":"Chairperson"
+  },
+  {
+     "from":"Congressman",
+     "to":"Member of Congress"
+  },
+  {
+     "from":"Construction Man",
+     "to":"Construction Worker"
+  },
+  {
+     "from":"Councilman",
+     "to":"Council Member"
+  },
+  {
+     "from":"Craftsman",
+     "to":"Artisan"
+  },
+  {
+     "from":"Crewman",
+     "to":"Crew Member"
+  },
+  {
+     "from":"Doorman",
+     "to":"Door Attendant"
+  },
+  {
+     "from":"Fireman",
+     "to":"Firefighter"
+  },
+  {
+     "from":"Foreman",
+     "to":"Supervisor"
+  },
+  {
+     "from":"Garbage Man",
+     "to":"Trash Collector"
+  },
+  {
+     "from":"Handyman",
+     "to":"Maintenance Person"
+  },
+  {
+     "from":"Longshoreman",
+     "to":"Stevedore"
+  },
+  {
+     "from":"Mailman",
+     "to":"Postal Worker"
+  },
+  {
+     "from":"Maintenance Man",
+     "to":"Caretaker"
+  },
+  {
+     "from":"Delivery Man",
+     "to":"Delivery Person"
+  },
+  {
+     "from":"Policeman",
+     "to":"Police Officer"
+  },
+  {
+     "from":"Policewoman",
+     "to":"Police Officer"
+  },
+  {
+     "from":"Salesman",
+     "to":"Salesperson"
+  },
+  {
+     "from":"Stuntman",
+     "to":"Stuntperson"
+  },
+  {
+     "from":"Weatherman",
+     "to":"Meteorolgist"
+  },
+  {
+     "from":"Actress",
+     "to":"Actor"
+  },
+  {
+     "from":"Barman",
+     "to":"Bartender"
+  },
+  {
+     "from":"Barmaid",
+     "to":"Bartender"
+  },
+  {
+     "from":"Headmaster",
+     "to":"Headteacher"
+  },
+  {
+     "from":"Headmistress",
+     "to":"Headteacher"
+  },
+  {
+     "from":"Steward",
+     "to":"Flight Attendant"
+  },
+  {
+     "from":"Stewardess",
+     "to":"Flight Attendant"
+  }
+]
