@@ -331,19 +331,19 @@ describe('controller', () => {
     });
 
     it('should add bullets for - (dash) with newline (\\n-[ \\t])', () => {
-      const testCandidate = {positions: [{ text: `-\t${TEST_BULLET}\n- ${TEST_BULLET}\n-\t${TEST_BULLET}` }]};
+      const testCandidate = {positions: [{ text: `\n-\t${TEST_BULLET}\n- ${TEST_BULLET}\n-\t${TEST_BULLET}` }]};
       controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
       assert.exists(testCandidate.positions[0].content);
       assert.equal(testCandidate.positions[0].content.length, 1);
       assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [TEST_BULLET, TEST_BULLET, TEST_BULLET] });
     });
 
-    it('should NOT add bullets for * (asterix) without newline (*[ \\t])', () => {
+    it('should NOT add bullets for - (dash) without newline (*[ \\t])', () => {
       const testCandidate = {positions: [{ text: `-\t${TEST_BULLET} - ${TEST_BULLET} -\t${TEST_BULLET}` }]};
       controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
       assert.exists(testCandidate.positions[0].content);
       assert.equal(testCandidate.positions[0].content.length, 1);
-      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: '-\ttest bullet content - test bullet content -\ttest bullet content' });
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: '- test bullet content - test bullet content - test bullet content' });
     });
 
     it('should add paragraph and bullets for • (small bullet character) with newline (\\n•[ \\t])', () => {
@@ -441,7 +441,7 @@ describe('controller', () => {
       controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
       assert.exists(testCandidate.positions[0].content);
       assert.equal(testCandidate.positions[0].content.length, 2);
-      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: 'Trevor\'s role at E.ON is to assist in the growth of the B2C solutions. ' });
+      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: 'Trevor\'s role at E.ON is to assist in the growth of the B2C solutions.' });
       assert.deepEqual(testCandidate.positions[0].content[1], { bullets: [  'Increased sales by 25% online with YoY increase of £1.2M',
         'Operational cost savings of £400K per annum',
         'Successful integration with BNPP finance partner increasing finance applications for Heating and Photovolics'

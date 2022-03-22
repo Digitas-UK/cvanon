@@ -6,6 +6,7 @@ const { performance } = require('perf_hooks');
 const smartRecruitersApiWrapper = require('./smartRecruitersApiWrapper');
 const adaptor = require('./adaptor');
 const htmlHelper = require('./htmlHelper');
+const textHelper = require('./textHelper');
 const wordTemplater = require('./wordTemplater');
 const config = require('./config');
 
@@ -154,7 +155,8 @@ function isUUID(guid) {
 
 function addContentArrayForCandidate(candidate, context) {
   candidate.positions.forEach(p => {
-    p.content = htmlToContentArray(fixHtml(p.text, context));
+    // p.content = htmlToContentArray(fixHtml(p.text, context));
+    p.content = textHelper.toParagraphAndBulletsArray(p.text);
   });
 }
 
