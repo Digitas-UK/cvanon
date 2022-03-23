@@ -5,7 +5,6 @@ const { performance } = require('perf_hooks');
 
 const smartRecruitersApiWrapper = require('./smartRecruitersApiWrapper');
 const adaptor = require('./adaptor');
-const htmlHelper = require('./htmlHelper');
 const textHelper = require('./textHelper');
 const wordTemplater = require('./wordTemplater');
 const config = require('./config');
@@ -155,39 +154,8 @@ function isUUID(guid) {
 
 function addContentArrayForCandidate(candidate, context) {
   candidate.positions.forEach(p => {
-    // p.content = htmlToContentArray(fixHtml(p.text, context));
     p.content = textHelper.toParagraphAndBulletsArray(p.text);
   });
-}
-
-function htmlToContentArray(html) {
-  const content = [];
-  html.split(/<p>|<ul>/).forEach(p => {
-    if (p) {
-      if (p.startsWith('<li>')) {
-        content.push({
-          bullets: p
-            .replace(/<\/ul>/, '')
-            .split(/<li>/)
-            .filter(li => li)
-            .map(li => li.replace(/<\/li>/, '')),
-        });
-      } else {
-        content.push({
-          paragraph: p.replace(/<\/p>/, ''),
-        });
-      }
-    }
-  });
-  return content;
-}
-
-function fixHtml(s, context) {
-  if (context.experimentalFeatures) {
-    return htmlHelper.fixBulletsAndParagraphs(s);
-  }
-  // Original version for newlines and asterix-based bullets that have no new line chars
-  return (s) ? s.replace(/\n/g, '<br/>').replace(/\*/g, '<br/>*') : '';
 }
 
 function logStart(context) {
@@ -205,5 +173,4 @@ module.exports = {
   _getCandidateFilename: getCandidateFilename,
   _isUUID: isUUID,
   _addContentArrayForCandidate: addContentArrayForCandidate,
-  _htmlToContentArray: htmlToContentArray,
 };
