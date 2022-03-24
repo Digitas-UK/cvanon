@@ -2,16 +2,15 @@
 'use strict';
 
 function toParagraphAndBulletsArray(text) {
-
+  // Supported bullet point formats (based on sample Smart Recruiters candidate data):
+  //   1. * (asterix), • (small bullet) and ● (large bullet) with optional leading new line character(s), tab or space
+  //   2. - (dash) with a mandatory leading new line character and optional tab or space  
   const content = [];
 
-  // Bullet point rules (based on sample Smart Recuiters data)
-  //   1. * (asterix), • (small bullet) and ● (large bullet) with an optional new line(s) and tab or space
-  //   2. - (dash) with a mandatory new line and optional tab or space
-
+  // Normalise supported bullet formats to \n•
   let normalised = text.replace(/\n*[\t ]?[*•●]/g, '\n•').replace(/\n[\t ]?-/g, '\n•');
 
-  // Remove newline characters embedded between two bullets
+  // Rempove newline characters embedded between two bullets
   normalised = normalised.replace(/(?<=•)[^•]+\n[^•]+(?=\n•)/g, m => m.replace('\n', ' '));
 
   const lines = normalised.split('\n');
