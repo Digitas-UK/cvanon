@@ -7,7 +7,6 @@ const nock = require('nock');
 const sinon = require('sinon');
 
 const TEST_PARAGRAPH = 'test paragraph content';
-const TEST_BULLET = 'test bullet content';
 
 describe('controller', () => {
   // Make new Date() return a fixed date
@@ -21,7 +20,6 @@ describe('controller', () => {
       });
       it('should default format to word', () => assert.equal(testContext.format, 'word'));
       it('should default numberOfPositions to 5', () => assert.equal(testContext.numberOfPositions, 5));
-      it('should default experimentalFeatures to true', () => assert.equal(testContext.experimentalFeatures, true));
       it('should set url', () => assert.equal(testContext.url, '/test/path'));
       it('should set start time', () => assert.exists(testContext.startTime));
     });
@@ -32,7 +30,6 @@ describe('controller', () => {
         query: {
           f: 'json',
           n: '20',
-          e: 'false',
         },
         headers: {
         },
@@ -40,7 +37,6 @@ describe('controller', () => {
       });
       it('should use querystring f for format', () => assert.equal(textContext.format, 'json'));
       it('should use querystring n for numberOfPositions to querystring f', () => assert.equal(textContext.numberOfPositions, 20));
-      it('should use querystring e for experimentalFeatures', () => assert.equal(textContext.experimentalFeatures, false));
     });
   });
 
@@ -194,58 +190,55 @@ describe('controller', () => {
 
 
   describe('#addContentArrayForCandidate', () => {
-    it('should add content array of paragraphs and bullets for each position (using newline and asterix characters)', () => {
+
+    it('should do nothing for candidate with no positions', () => {
       const testCandidate = {
-        positions: [
-          {
-            text: `${TEST_PARAGRAPH}\n\n* ${TEST_BULLET}\n*${TEST_BULLET}\n${TEST_PARAGRAPH}`,
-          },
-        ],
+        positions: [],
       };
-      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
-      assert.exists(testCandidate.positions[0].content);
-      assert.equal(testCandidate.positions[0].content.length, 3);
-      assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
-      assert.deepEqual(testCandidate.positions[0].content[1], { bullets: [ TEST_BULLET, TEST_BULLET ] });
-      assert.deepEqual(testCandidate.positions[0].content[2], { paragraph: TEST_PARAGRAPH });
+      controller._addContentArrayForCandidate(testCandidate);
+      assert.deepEqual(testCandidate, {
+        positions: [],
+      });
     });
 
-    it('should add content array of paragraphs and bullets for each position (using newline, tab and "•" characters)', () => {
+    it('should add empty content array for a position with no text', () => {
       const testCandidate = {
         positions: [
-          {
-            text: `•\t${TEST_BULLET}\n•\t${TEST_BULLET}\n${TEST_PARAGRAPH}`,
-          },
+          { text: '' },
         ],
       };
-      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      controller._addContentArrayForCandidate(testCandidate);
       assert.exists(testCandidate.positions[0].content);
-      assert.equal(testCandidate.positions[0].content.length, 2);
-      assert.deepEqual(testCandidate.positions[0].content[0], { bullets: [ TEST_BULLET, TEST_BULLET ] });
-      assert.deepEqual(testCandidate.positions[0].content[1], { paragraph: TEST_PARAGRAPH });
+      assert.equal(testCandidate.positions[0].content.length, 0);
     });
 
-    it('should add content array of paragraphs and bullets for each position (with no formatting characters)', () => {
+    it('should add content array with paragraph for each position with text (with no formatting)', () => {
       const testCandidate = {
         positions: [
-          {
-            text: TEST_PARAGRAPH,
-          },
+          { text: TEST_PARAGRAPH },
+          { text: TEST_PARAGRAPH },
         ],
       };
-      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      controller._addContentArrayForCandidate(testCandidate);
       assert.exists(testCandidate.positions[0].content);
       assert.equal(testCandidate.positions[0].content.length, 1);
       assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
+      assert.exists(testCandidate.positions[1].content);
+      assert.equal(testCandidate.positions[1].content.length, 1);
+      assert.deepEqual(testCandidate.positions[1].content[0], { paragraph: TEST_PARAGRAPH });
     });
-  });
 
-  describe('#htmlToContentArray', () => {
-    const contentArray = controller._htmlToContentArray(`<p>${TEST_PARAGRAPH}</p><ul><li>${TEST_BULLET}</li><li>${TEST_BULLET}</li></ul><p>${TEST_PARAGRAPH}</p>`);
-    it('array should contain 3 items', () => assert.equal(contentArray.length, 3));
-    it('first item should be a paragraph', () => assert.deepEqual(contentArray[0], { paragraph: TEST_PARAGRAPH }));
-    it('second item should be bullets', () => assert.deepEqual(contentArray[1], { bullets: [ TEST_BULLET, TEST_BULLET ] }));
-    it('third item should be a paragraph', () => assert.deepEqual(contentArray[2], { paragraph: TEST_PARAGRAPH }));
+    it('should add content array with multiple paragraphs for each position with text containing newlines)', () => {
+      const testCandidate = {
+        positions: [
+          { text: `${TEST_PARAGRAPH}\n${TEST_PARAGRAPH}` },
+        ],
+      };
+      controller._addContentArrayForCandidate(testCandidate);
+      assert.exists(testCandidate.positions[0].content);
+      assert.equal(testCandidate.positions[0].content.length, 2);
+      assert.deepEqual(testCandidate.positions[0].content, [{ paragraph: TEST_PARAGRAPH }, { paragraph: TEST_PARAGRAPH } ]);
+    });
   });
 });
 
