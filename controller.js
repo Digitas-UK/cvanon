@@ -61,11 +61,6 @@ function getContext(req) {
   };
 }
 
-function setJsonResponse(res, payload) {
-  res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-  res.end(JSON.stringify(payload));
-}
-
 function setCandidateResponse(res, candidate, context) {
   try {
     if (context.format === 'word') {
@@ -78,6 +73,11 @@ function setCandidateResponse(res, candidate, context) {
   } catch (err) {
     setErrorResponse(res, err, context);
   }
+}
+
+function setJsonResponse(res, payload) {
+  res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+  res.end(JSON.stringify(payload));
 }
 
 function setErrorResponse(res, error, context) {
