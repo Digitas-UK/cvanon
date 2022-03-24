@@ -40,22 +40,6 @@ describe('controller', () => {
     });
   });
 
-  describe('#getCandidateFilename()', () => {
-    it('should return expected filename with initals & job title', () =>
-      assert.equal(controller._getCandidateFilename({
-        initials: 'AB',
-        jobTitle: 'Account Manager',
-        jobRef: 'REF123',
-      }), 'Anonymised Candidate Profile - AB - Account Manager - REF123.docx'));
-
-    it('should remove special characters from job title (e.g a comma)', () =>
-      assert.equal(controller._getCandidateFilename({
-        initials: 'CD',
-        jobTitle: 'Senior Director, Client Engagement',
-        jobRef: 'REF456',
-      }), 'Anonymised Candidate Profile - CD - Senior Director Client Engagement - REF456.docx'));
-  });
-
   describe('#handleCandidateRequest()', () => {
 
     describe('with non-guid candidate id', () => {

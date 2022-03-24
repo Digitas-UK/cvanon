@@ -38,12 +38,12 @@ async function handleCandidateRequest(req, res) {
 
 async function getCandidate(candidateId, jobId, res, context) {
   const srcCandidate = await smartRecruitersApiWrapper.get(`/candidates/${candidateId}`);
-  const candidate = adaptor.candidate(srcCandidate, context);
+  const candidate = adaptor.buildCandidate(srcCandidate, context);
   if (!jobId) {
     jobId = srcCandidate.primaryAssignment.job.id;
   }
   const srcNotes = await smartRecruitersApiWrapper.get(`/candidates/${candidateId}/jobs/${jobId}/screening-answers`);
-  candidate.notes = adaptor.notes(srcNotes, srcCandidate.firstName, context);
+  candidate.notes = adaptor.buildNotes(srcNotes, srcCandidate.firstName, context);
   const job = await smartRecruitersApiWrapper.get(`/jobs/${jobId}`);
   candidate.jobRef = job.refNumber;
   return candidate;
@@ -61,16 +61,11 @@ function getContext(req) {
   };
 }
 
-function setJsonResponse(res, payload) {
-  res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-  res.end(JSON.stringify(payload));
-}
-
 function setCandidateResponse(res, candidate, context) {
   try {
     if (context.format === 'word') {
       addContentArrayForCandidate(candidate, context);
-      wordTemplater.render(res, 'candidate.docx', candidate, getCandidateFilename(candidate));
+      wordTemplater.render(res, 'candidate.docx', candidate, adaptor.buildFileName(candidate));
     } else {
       setJsonResponse(res, candidate);
     }
@@ -80,12 +75,9 @@ function setCandidateResponse(res, candidate, context) {
   }
 }
 
-function getCandidateFilename(candidate) {
-  return `Anonymised Candidate Profile - ${candidate.initials} - ${cleanJobTitle(candidate.jobTitle)} - ${candidate.jobRef}.docx`;
-}
-
-function cleanJobTitle(jobTitle) {
-  return jobTitle ? jobTitle.replace(/[^\w]/g, ' ').replace(/ +/g, ' ') : '';
+function setJsonResponse(res, payload) {
+  res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+  res.end(JSON.stringify(payload));
 }
 
 function setErrorResponse(res, error, context) {
@@ -167,7 +159,6 @@ function logFinish(context, status, message = null) {
 module.exports = {
   handleCandidateRequest,
   _getContext: getContext,
-  _getCandidateFilename: getCandidateFilename,
   _isUUID: isUUID,
   _addContentArrayForCandidate: addContentArrayForCandidate,
 };

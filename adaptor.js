@@ -5,7 +5,7 @@
 // Originally adapted and abridged from https://github.com/xenoash/coen691-gender-neutralizer/blob/master/proj/dictionary.txt
 const JOB_TITLE_SUBSTITUTIONS = require('./job-title-substitutions.json');
 
-function candidate(src, context) {
+function buildCandidate(src, context) {
   const positions = [];
   if (src.experience) {
     src.experience
@@ -28,6 +28,14 @@ function candidate(src, context) {
   };
 }
 
+function buildNotes(src, firstName, config) {
+  return getRadioValue(src, 'Employment Visa Status');
+}
+
+function buildFileName(candidate) {
+  return `Anonymised Candidate Profile - ${candidate.initials} - ${cleanString(candidate.jobTitle)} - ${candidate.jobRef}.docx`;
+}
+
 function experienceSorter(a, b) {
   if (a.endDate && b.endDate) {
     return b.endDate.localeCompare(a.endDate);
@@ -42,29 +50,6 @@ function experienceSorter(a, b) {
     return b.startDate.localeCompare(a.startDate);
   }
   return 0;
-}
-
-function notes(src, firstName, config) {
-  return getRadioValue(src, 'Employment Visa Status');
-}
-
-function getRadioValue(src, name) {
-  const item = src.content.filter(c => c.name === name)[0];
-  return (item) ? `${item.label} ${item.records.map(r => r.fields[0].values[0].label)[0]}` : '';
-}
-
-function calculateDuration(experience) {
-  if (experience.startDate && (experience.current || experience.endDate)) {
-    const from = new Date(experience.startDate);
-    const to = experience.current ? new Date() : new Date(experience.endDate);
-    const monthDiff = to.getMonth() - from.getMonth() + (12 * (to.getFullYear() - from.getFullYear())) + 1;
-    const years = Math.floor(monthDiff / 12);
-    const months = monthDiff % 12;
-    let duration = (years === 0 ? '' : years + ' year') + (years > 1 ? 's' : '');
-    duration += (years !== 0 && months !== 0 ? ', ' : '');
-    duration += (months === 0 ? '' : months + ' month') + (months > 1 ? 's' : '');
-    return duration;
-  }
 }
 
 function getTitle(experience, candidateId) {
@@ -86,11 +71,18 @@ function neutraliseJobTitle(title, candidateId) {
   return modifiedTitle;
 }
 
-function replaceFirstNameWithTheCandidate(text, firstName) {
-  text = text.replace(new RegExp('^(' + firstName + ')\\b', 'ig'), 'The candidate');
-  text = text.replace(new RegExp('\\. (' + firstName + ')\\b', 'ig'), '. The candidate');
-  text = text.replace(new RegExp('\\b(' + firstName + ')\\b', 'ig'), 'the candidate');
-  return text;
+function calculateDuration(experience) {
+  if (experience.startDate && (experience.current || experience.endDate)) {
+    const from = new Date(experience.startDate);
+    const to = experience.current ? new Date() : new Date(experience.endDate);
+    const monthDiff = to.getMonth() - from.getMonth() + (12 * (to.getFullYear() - from.getFullYear())) + 1;
+    const years = Math.floor(monthDiff / 12);
+    const months = monthDiff % 12;
+    let duration = (years === 0 ? '' : years + ' year') + (years > 1 ? 's' : '');
+    duration += (years !== 0 && months !== 0 ? ', ' : '');
+    duration += (months === 0 ? '' : months + ' month') + (months > 1 ? 's' : '');
+    return duration;
+  }
 }
 
 function neutralise(text, firstName, candidateId) {
@@ -107,11 +99,11 @@ function neutralise(text, firstName, candidateId) {
   return modified;
 }
 
-function findFirstDiffPos(a, b) {
-  let i = 0;
-  if (a === b) return -1;
-  while (a[i] === b[i]) i++;
-  return i;
+function replaceFirstNameWithTheCandidate(text, firstName) {
+  text = text.replace(new RegExp('^(' + firstName + ')\\b', 'ig'), 'The candidate');
+  text = text.replace(new RegExp('\\. (' + firstName + ')\\b', 'ig'), '. The candidate');
+  text = text.replace(new RegExp('\\b(' + firstName + ')\\b', 'ig'), 'the candidate');
+  return text;
 }
 
 function genderNeutralise(text) {
@@ -149,10 +141,27 @@ function genderNeutralise(text) {
   return text;
 }
 
+function findFirstDiffPos(a, b) {
+  let i = 0;
+  if (a === b) return -1;
+  while (a[i] === b[i]) i++;
+  return i;
+}
+
+function getRadioValue(src, name) {
+  const item = src.content.filter(c => c.name === name)[0];
+  return (item) ? `${item.label} ${item.records.map(r => r.fields[0].values[0].label)[0]}` : '';
+}
+
+function cleanString(s) {
+  return s ? s.replace(/[^\w]/g, ' ').replace(/ +/g, ' ') : '';
+}
+
 module.exports = {
-  candidate,
-  notes,
-  _calculateDuration: calculateDuration,
+  buildCandidate,
+  buildNotes,
+  buildFileName,
   _getTitle: getTitle,
+  _calculateDuration: calculateDuration,
   _genderNeutralise: genderNeutralise,
 };
