@@ -20,7 +20,6 @@ describe('controller', () => {
       });
       it('should default format to word', () => assert.equal(testContext.format, 'word'));
       it('should default numberOfPositions to 5', () => assert.equal(testContext.numberOfPositions, 5));
-      it('should default experimentalFeatures to true', () => assert.equal(testContext.experimentalFeatures, true));
       it('should set url', () => assert.equal(testContext.url, '/test/path'));
       it('should set start time', () => assert.exists(testContext.startTime));
     });
@@ -31,7 +30,6 @@ describe('controller', () => {
         query: {
           f: 'json',
           n: '20',
-          e: 'false',
         },
         headers: {
         },
@@ -39,7 +37,6 @@ describe('controller', () => {
       });
       it('should use querystring f for format', () => assert.equal(textContext.format, 'json'));
       it('should use querystring n for numberOfPositions to querystring f', () => assert.equal(textContext.numberOfPositions, 20));
-      it('should use querystring e for experimentalFeatures', () => assert.equal(textContext.experimentalFeatures, false));
     });
   });
 
@@ -198,7 +195,7 @@ describe('controller', () => {
       const testCandidate = {
         positions: [],
       };
-      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      controller._addContentArrayForCandidate(testCandidate);
       assert.deepEqual(testCandidate, {
         positions: [],
       });
@@ -210,7 +207,7 @@ describe('controller', () => {
           { text: '' },
         ],
       };
-      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      controller._addContentArrayForCandidate(testCandidate);
       assert.exists(testCandidate.positions[0].content);
       assert.equal(testCandidate.positions[0].content.length, 0);
     });
@@ -222,7 +219,7 @@ describe('controller', () => {
           { text: TEST_PARAGRAPH },
         ],
       };
-      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      controller._addContentArrayForCandidate(testCandidate);
       assert.exists(testCandidate.positions[0].content);
       assert.equal(testCandidate.positions[0].content.length, 1);
       assert.deepEqual(testCandidate.positions[0].content[0], { paragraph: TEST_PARAGRAPH });
@@ -237,7 +234,7 @@ describe('controller', () => {
           { text: `${TEST_PARAGRAPH}\n${TEST_PARAGRAPH}` },
         ],
       };
-      controller._addContentArrayForCandidate(testCandidate, { experimentalFeatures: true });
+      controller._addContentArrayForCandidate(testCandidate);
       assert.exists(testCandidate.positions[0].content);
       assert.equal(testCandidate.positions[0].content.length, 2);
       assert.deepEqual(testCandidate.positions[0].content, [{ paragraph: TEST_PARAGRAPH }, { paragraph: TEST_PARAGRAPH } ]);

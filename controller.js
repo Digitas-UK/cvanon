@@ -11,7 +11,6 @@ const config = require('./config');
 
 const DEFAULT_FORMAT = 'word';
 const DEFAULT_NUMBER_OF_POSITIONS = '5';
-const DEFAULT_EXPERIMENTAL_FEATURES = 'true';
 
 async function handleCandidateRequest(req, res) {
   const context = getContext(req);
@@ -53,12 +52,10 @@ async function getCandidate(candidateId, jobId, res, context) {
 function getContext(req) {
   const {
     f: format = DEFAULT_FORMAT,
-    n: numberOfPositions = DEFAULT_NUMBER_OF_POSITIONS,
-    e: experimentalFeatures = DEFAULT_EXPERIMENTAL_FEATURES } = req.query;
+    n: numberOfPositions = DEFAULT_NUMBER_OF_POSITIONS } = req.query;
   return {
     format: format,
     numberOfPositions: Number(numberOfPositions),
-    experimentalFeatures: experimentalFeatures === 'true',
     url: req.originalUrl,
     startTime: performance.now(),
   };
@@ -152,7 +149,7 @@ function isUUID(guid) {
   return !!guid && String(guid).match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$') !== null;
 }
 
-function addContentArrayForCandidate(candidate, context) {
+function addContentArrayForCandidate(candidate) {
   candidate.positions.forEach(p => {
     p.content = textHelper.toParagraphAndBulletsArray(p.text);
   });
