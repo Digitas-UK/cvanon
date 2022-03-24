@@ -151,6 +151,22 @@ describe('adaptor', () => {
     });
   });
 
+  describe('#buildFileName()', () => {
+    it('should return expected file name with initals & job title', () =>
+      assert.equal(adaptor.buildFileName({
+        initials: 'AB',
+        jobTitle: 'Account Manager',
+        jobRef: 'REF123',
+      }), 'Anonymised Candidate Profile - AB - Account Manager - REF123.docx'));
+
+    it('should remove special characters from job title (e.g a comma)', () =>
+      assert.equal(adaptor.buildFileName({
+        initials: 'CD',
+        jobTitle: 'Senior Director, Client Engagement',
+        jobRef: 'REF456',
+      }), 'Anonymised Candidate Profile - CD - Senior Director Client Engagement - REF456.docx'));
+  });
+
   describe('#getTitle()', () => {
     it('should return job title and company', () => assert.equal(adaptor._getTitle({
       title: 'Technical Architect',

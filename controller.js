@@ -70,7 +70,7 @@ function setCandidateResponse(res, candidate, context) {
   try {
     if (context.format === 'word') {
       addContentArrayForCandidate(candidate, context);
-      wordTemplater.render(res, 'candidate.docx', candidate, getCandidateFilename(candidate));
+      wordTemplater.render(res, 'candidate.docx', candidate, adaptor.buildFileName(candidate));
     } else {
       setJsonResponse(res, candidate);
     }
@@ -78,14 +78,6 @@ function setCandidateResponse(res, candidate, context) {
   } catch (err) {
     setErrorResponse(res, err, context);
   }
-}
-
-function getCandidateFilename(candidate) {
-  return `Anonymised Candidate Profile - ${candidate.initials} - ${cleanJobTitle(candidate.jobTitle)} - ${candidate.jobRef}.docx`;
-}
-
-function cleanJobTitle(jobTitle) {
-  return jobTitle ? jobTitle.replace(/[^\w]/g, ' ').replace(/ +/g, ' ') : '';
 }
 
 function setErrorResponse(res, error, context) {
@@ -167,7 +159,6 @@ function logFinish(context, status, message = null) {
 module.exports = {
   handleCandidateRequest,
   _getContext: getContext,
-  _getCandidateFilename: getCandidateFilename,
   _isUUID: isUUID,
   _addContentArrayForCandidate: addContentArrayForCandidate,
 };

@@ -149,9 +149,19 @@ function genderNeutralise(text) {
   return text;
 }
 
+function buildFileName(candidate) {
+  return `Anonymised Candidate Profile - ${candidate.initials} - ${cleanString(candidate.jobTitle)} - ${candidate.jobRef}.docx`;
+}
+
+function cleanString(s) {
+  return s ? s.replace(/[^\w]/g, ' ').replace(/ +/g, ' ') : '';
+}
+
+
 module.exports = {
   candidate,
   notes,
+  buildFileName,
   _calculateDuration: calculateDuration,
   _getTitle: getTitle,
   _genderNeutralise: genderNeutralise,
