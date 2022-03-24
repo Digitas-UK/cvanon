@@ -38,12 +38,12 @@ async function handleCandidateRequest(req, res) {
 
 async function getCandidate(candidateId, jobId, res, context) {
   const srcCandidate = await smartRecruitersApiWrapper.get(`/candidates/${candidateId}`);
-  const candidate = adaptor.candidate(srcCandidate, context);
+  const candidate = adaptor.buildCandidate(srcCandidate, context);
   if (!jobId) {
     jobId = srcCandidate.primaryAssignment.job.id;
   }
   const srcNotes = await smartRecruitersApiWrapper.get(`/candidates/${candidateId}/jobs/${jobId}/screening-answers`);
-  candidate.notes = adaptor.notes(srcNotes, srcCandidate.firstName, context);
+  candidate.notes = adaptor.buildNotes(srcNotes, srcCandidate.firstName, context);
   const job = await smartRecruitersApiWrapper.get(`/jobs/${jobId}`);
   candidate.jobRef = job.refNumber;
   return candidate;

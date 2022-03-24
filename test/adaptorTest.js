@@ -9,9 +9,9 @@ describe('adaptor', () => {
   // Make new Date() return a fixed date
   sinon.useFakeTimers(new Date('2022-01-19').getTime());
 
-  describe('#candidate()', () => {
-    describe('#candidate() with minimal input', () => {
-      const candidate = adaptor.candidate(createCandidateTestInputObject(), {});
+  describe('#buildCandidate()', () => {
+    describe('#buildCandidate() with minimal input', () => {
+      const candidate = adaptor.buildCandidate(createCandidateTestInputObject(), {});
       it('should have candidate id', () => assert.equal(candidate.candidateId, 'abc-123'));
       it('should have initals', () => assert.equal(candidate.initials, 'JS'));
       it('should have job title', () => assert.equal(candidate.jobTitle, 'Account Manager'));
@@ -31,8 +31,8 @@ describe('adaptor', () => {
 
     });
 
-    describe('#candidate() with one job, tags and gender-specific text', () => {
-      const candidate = adaptor.candidate(createCandidateTestInputObject('def-456', 'Mary', undefined, undefined, ['google-cloud', 'social-media'], [
+    describe('#buildCandidate() with one job, tags and gender-specific text', () => {
+      const candidate = adaptor.buildCandidate(createCandidateTestInputObject('def-456', 'Mary', undefined, undefined, ['google-cloud', 'social-media'], [
         {
           title: 'Data Scientist',
           company: 'Sterling Cooper',
@@ -64,8 +64,8 @@ describe('adaptor', () => {
       }));
     });
 
-    describe('#candidate() with six unordered jobs', () => {
-      const candidate = adaptor.candidate(createCandidateTestInputObject(undefined, undefined, undefined, undefined, undefined, [
+    describe('#buildCandidate() with six unordered jobs', () => {
+      const candidate = adaptor.buildCandidate(createCandidateTestInputObject(undefined, undefined, undefined, undefined, undefined, [
         {
           company: 'Fourth Job',
           startDate: '2006-01',
@@ -108,8 +108,8 @@ describe('adaptor', () => {
     });
   });
 
-  describe('#notes()', () => {
-    describe('#notes() with screening notes', () => {
+  describe('#buildNotes()', () => {
+    describe('#buildNotes() with screening notes', () => {
       const src = {
         totalFound: 1,
         content: [
@@ -139,15 +139,15 @@ describe('adaptor', () => {
         ],
       };
 
-      it('should return notes string in expected format', () => assert.equal(adaptor.notes(src, null, null), 'Will you now or in the future require sponsorship for employment visa status? No'));
+      it('should return notes string in expected format', () => assert.equal(adaptor.buildNotes(src, null, null), 'Will you now or in the future require sponsorship for employment visa status? No'));
     });
 
-    describe('#notes() without screening notes', () => {
+    describe('#buildNotes() without screening notes', () => {
       const src = {
         totalFound: 0,
         content: [],
       };
-      it('should return an empty string', () => assert.equal(adaptor.notes(src, null, null), ''));
+      it('should return an empty string', () => assert.equal(adaptor.buildNotes(src, null, null), ''));
     });
   });
 
