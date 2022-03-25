@@ -19,7 +19,7 @@ function isValid() {
 }
 
 function getSmartRecruitersApiKey() {
-  return config.SMART_RECRUITERS_API_KEY;
+  return config.SMART_RECRUITERS_API_KEY || '';
 }
 
 function getHttpBasicAuthUsers() {

@@ -1,4 +1,5 @@
 {
+    "date": "Wed Jan 19 2022 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "message":"The Smart Recruiters candidate or job was not found.",
     "status":404,
     "type":"error"

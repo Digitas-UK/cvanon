@@ -2,11 +2,13 @@
 'use strict';
 
 const assert = require('chai').assert;
+const config = require('../config.js');
 const controller = require('../controller.js');
 const nock = require('nock');
 const sinon = require('sinon');
 
 const TEST_PARAGRAPH = 'test paragraph content';
+const EMAIL_PLACEHOLDER = '_EMAIL_PLACEHOLDER_';
 
 describe('controller', () => {
   // Make new Date() return a fixed date
@@ -134,9 +136,10 @@ describe('controller', () => {
         return controller.handleCandidateRequest(mockReq, mockRes).then(() => {
           assert.equal(mockRes.status, 500);
           assert.deepEqual(mockRes.headers, {'Content-Type': 'application/json; charset=utf-8'});
-          assert.deepEqual(deleteDate(JSON.parse(mockRes.body)), {
+          assert.deepEqual(JSON.parse(mockRes.body), {
+            date: 'Wed Jan 19 2022 00:00:00 GMT+0000 (Greenwich Mean Time)',
             type: 'error',
-            message: 'Sorry, an error occurred! Please report it to abc@digitas.com and include the full output of this page',
+            message: `Sorry, an error occurred! Please report it to ${config.getSupportEmailAddress()} and include the full output of this page`,
             status: 500,
             error: {
               message: 'Error: Whoops! Something bad happened during the transformation or render',
@@ -228,6 +231,7 @@ describe('controller', () => {
 
 function testHandleCandidateRequestMethodWithNetworkMock(candidateId, statusCodes = [200, 200, 200], expectedStatus = 200, additionalAssertions) {
   const expectedBody = require(`./data/candidate/${candidateId}/expected.json`);
+  setMessageEmailPlaceholderToCurrentConfig(expectedBody);
   networkMockCandidateHttpApiCalls(candidateId, null, statusCodes);
   const mockReq = createMockRequest();
   mockReq.params.candidateId = candidateId;
@@ -236,7 +240,7 @@ function testHandleCandidateRequestMethodWithNetworkMock(candidateId, statusCode
     assert.equal(mockRes.status, expectedStatus);
     assert.deepEqual(mockRes.headers, {'Content-Type': 'application/json; charset=utf-8'});
     console.log(mockRes.body);
-    assert.deepEqual(deleteDate(JSON.parse(mockRes.body)), expectedBody);
+    assert.deepEqual(JSON.parse(mockRes.body), expectedBody);
     if (additionalAssertions){
       additionalAssertions(mockRes);
     }
@@ -293,9 +297,8 @@ function createMockResponse() {
   };
 }
 
-function deleteDate(o){
-  if (o.date){
-    delete o.date;
+function setMessageEmailPlaceholderToCurrentConfig(body) {
+  if (body.message && body.message.indexOf(EMAIL_PLACEHOLDER) !== -1) {
+    body.message = body.message.replace(EMAIL_PLACEHOLDER, config.getSupportEmailAddress());
   }
-  return o;
 }

@@ -1,4 +1,5 @@
 {
+    "date": "Wed Jan 19 2022 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "error":{
        "path":"/candidates/0d358a21-64e8-4393-8fee-a71e72fe5683",
        "reason":"proxy/status",
