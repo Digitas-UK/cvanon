@@ -1,10 +1,10 @@
- /* eslint-disable max-len */
+/* eslint-disable max-len */
 'use strict';
 
 function toParagraphAndBulletsArray(text) {
   // Supported bullet point formats (based on sample Smart Recruiters candidate data):
   //   1. * (asterix), • (small bullet) and ● (large bullet) with optional leading new line character(s), tab or space
-  //   2. - (dash) with a mandatory leading new line character and optional tab or space  
+  //   2. - (dash) with a mandatory leading new line character and optional tab or space
   const content = [];
 
   // Normalise supported bullet formats to \n•

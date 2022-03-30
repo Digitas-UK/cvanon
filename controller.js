@@ -37,14 +37,15 @@ async function handleCandidateRequest(req, res) {
 }
 
 async function getCandidate(candidateId, jobId, res, context) {
-  const srcCandidate = await smartRecruitersApiWrapper.get(`/candidates/${candidateId}`);
+  const apiKey = config.getSmartRecruitersApiKey();
+  const srcCandidate = await smartRecruitersApiWrapper.get(`/candidates/${candidateId}`, apiKey);
   const candidate = adaptor.buildCandidate(srcCandidate, context);
   if (!jobId) {
     jobId = srcCandidate.primaryAssignment.job.id;
   }
-  const srcNotes = await smartRecruitersApiWrapper.get(`/candidates/${candidateId}/jobs/${jobId}/screening-answers`);
+  const srcNotes = await smartRecruitersApiWrapper.get(`/candidates/${candidateId}/jobs/${jobId}/screening-answers`, apiKey);
   candidate.notes = adaptor.buildNotes(srcNotes, srcCandidate.firstName, context);
-  const job = await smartRecruitersApiWrapper.get(`/jobs/${jobId}`);
+  const job = await smartRecruitersApiWrapper.get(`/jobs/${jobId}`, apiKey);
   candidate.jobRef = job.refNumber;
   return candidate;
 }

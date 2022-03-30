@@ -1,16 +1,30 @@
+/* eslint-disable indent */
 /* eslint-disable max-len */
 'use strict';
 
 const assert = require('chai').assert;
-const controller = require('../controller.js');
-const nock = require('nock');
 const sinon = require('sinon');
+const nock = require('nock');
+const config = requireUncached('../config.js');
+const controller = require('../controller.js');
 
+const TEST_CURRENT_DATE = '2022-01-19';
 const TEST_PARAGRAPH = 'test paragraph content';
+const TEST_SUPPORT_EMAIL_ADDRESS = 'someone@somewhere.net';
+
 
 describe('controller', () => {
-  // Make new Date() return a fixed date
-  sinon.useFakeTimers(new Date('2022-01-19').getTime());
+
+  beforeEach(() => {
+    sinon.useFakeTimers(new Date(TEST_CURRENT_DATE).getTime());
+    sinon.stub(config, 'getSupportEmailAddress').returns(TEST_SUPPORT_EMAIL_ADDRESS);
+    sinon.stub(config, 'getSmartRecruitersApiKey').returns('some-api-key');
+  });
+
+  afterEach(() => {
+    config.getSmartRecruitersApiKey.restore();
+    config.getSupportEmailAddress.restore();
+  });
 
   describe('#getContext()', () => {
     describe('#getContext() with defaults', () => {
@@ -46,16 +60,16 @@ describe('controller', () => {
       const mockReq = createMockRequest();
       mockReq.params.candidateId = 'bad-candidate-id';
       const mockRes = createMockResponse();
-      controller.handleCandidateRequest(mockReq, mockRes);
 
-      it('should have status code 400', () => assert.equal(mockRes.status, 400));
-      it('should have application/json content type', () => assert.deepEqual(mockRes.headers, {'Content-Type': 'application/json; charset=utf-8'}));
-
-      const body = JSON.parse(mockRes.body);
-      it('should have body error type set to error', () => assert.equal(body.type, 'error'));
-      it('should have body error message set to bad request', () => assert.equal(body.message, 'Bad request: bad-candidate-id is not a valid id'));
-      it('should have body error status set to 400', () => assert.equal(body.status, 400));
-      it('should have body error date field', () => assert.exists(body.date));
+      controller.handleCandidateRequest(mockReq, mockRes).then(() => {
+        it('should have status code 400', () => assert.equal(mockRes.status, 400));
+        it('should have application/json content type', () => assert.deepEqual(mockRes.headers, {'Content-Type': 'application/json; charset=utf-8'}));
+        const body = JSON.parse(mockRes.body);
+        it('should have body error type set to error', () => assert.equal(body.type, 'error'));
+        it('should have body error message set to bad request', () => assert.equal(body.message, 'Bad request: bad-candidate-id is not a valid id'));
+        it('should have body error status set to 400', () => assert.equal(body.status, 400));
+        it('should have body error date field', () => assert.exists(body.date));
+      });
     });
 
     describe('candidate that exists (0e6b06f7-b56c-4507-8da1-9567a7bf6d24) using network mock', () => {
@@ -134,9 +148,10 @@ describe('controller', () => {
         return controller.handleCandidateRequest(mockReq, mockRes).then(() => {
           assert.equal(mockRes.status, 500);
           assert.deepEqual(mockRes.headers, {'Content-Type': 'application/json; charset=utf-8'});
-          assert.deepEqual(deleteDate(JSON.parse(mockRes.body)), {
+          assert.deepEqual(JSON.parse(mockRes.body), {
+            date: 'Wed Jan 19 2022 00:00:00 GMT+0000 (Greenwich Mean Time)',
             type: 'error',
-            message: 'Sorry, an error occurred! Please report it to abc@digitas.com and include the full output of this page',
+            message: `Sorry, an error occurred! Please report it to ${TEST_SUPPORT_EMAIL_ADDRESS} and include the full output of this page`,
             status: 500,
             error: {
               message: 'Error: Whoops! Something bad happened during the transformation or render',
@@ -236,7 +251,7 @@ function testHandleCandidateRequestMethodWithNetworkMock(candidateId, statusCode
     assert.equal(mockRes.status, expectedStatus);
     assert.deepEqual(mockRes.headers, {'Content-Type': 'application/json; charset=utf-8'});
     console.log(mockRes.body);
-    assert.deepEqual(deleteDate(JSON.parse(mockRes.body)), expectedBody);
+    assert.deepEqual(JSON.parse(mockRes.body), expectedBody);
     if (additionalAssertions){
       additionalAssertions(mockRes);
     }
@@ -293,9 +308,8 @@ function createMockResponse() {
   };
 }
 
-function deleteDate(o){
-  if (o.date){
-    delete o.date;
-  }
-  return o;
+// node.js caches modules that is imported using 'require' - this prevents caching
+function requireUncached(module){
+  delete require.cache[require.resolve(module)];
+  return require(module);
 }
