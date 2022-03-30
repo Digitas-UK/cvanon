@@ -6,7 +6,7 @@
        "reason":"proxy/status",
        "status":401
     },
-    "message":"Sorry, an error occurred! Please report it to _EMAIL_PLACEHOLDER_ and include the full output of this page",
+    "message":"Sorry, an error occurred! Please report it to someone@somewhere.net and include the full output of this page",
     "status":500,
     "type":"error"
  }

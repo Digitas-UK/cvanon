@@ -4,8 +4,7 @@
 const assert = require('chai').assert;
 const nock = require('nock');
 const smartRecruitersApiWrapper = require('../smartRecruitersApiWrapper.js');
-
-process.env.API_KEY = 'some-test-api-key';
+const TEST_API_KEY = 'some-test-api-key';
 
 describe('smartRecruitersApiWrapper', () => {
   describe('#get()', () => {
@@ -16,7 +15,7 @@ describe('smartRecruitersApiWrapper', () => {
         id: 123,
         firstName: 'Paul',
       });
-      return smartRecruitersApiWrapper.get(path).then((candidate) => {
+      return smartRecruitersApiWrapper.get(path, TEST_API_KEY).then((candidate) => {
         assert.equal(candidate.id, 123);
         assert.equal(candidate.firstName, 'Paul');
       });
@@ -28,7 +27,7 @@ describe('smartRecruitersApiWrapper', () => {
       scope.get(path).reply(401, {
         message: 'An API error message',
       });
-      return smartRecruitersApiWrapper.get(path).catch(err => {
+      return smartRecruitersApiWrapper.get(path, TEST_API_KEY).catch(err => {
         assert.deepEqual(err, {
           message: 'An API error message',
           path: '/some/path/456',
@@ -42,7 +41,7 @@ describe('smartRecruitersApiWrapper', () => {
       const path = '/some/path/789';
       const scope = nock('https://api.smartrecruiters.com');
       scope.get(path).reply(200, 'This is not JSON', {'Content-Type': 'text/html'});
-      return smartRecruitersApiWrapper.get(path).catch(err => {
+      return smartRecruitersApiWrapper.get(path, TEST_API_KEY).catch(err => {
         console.log(JSON.stringify(err));
         assert.deepEqual(err, {
           message: 'Unexpected content type: text/html',

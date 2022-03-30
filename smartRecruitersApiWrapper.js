@@ -3,16 +3,15 @@
 
 const https = require('https');
 const { performance } = require('perf_hooks');
-const config = require('./config');
 
-function get(path) {
+function get(path, apiKey) {
   const options = {
     hostname: 'api.smartrecruiters.com',
     port: 443,
     path: path,
     method: 'GET',
     headers: {
-      'X-SmartToken': config.getSmartRecruitersApiKey(),
+      'X-SmartToken': apiKey,
     },
   };
   return new Promise((resolve, reject) => {
