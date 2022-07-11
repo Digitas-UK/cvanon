@@ -1,6 +1,6 @@
 # Introduction
 
-The Blind CV tool allows recruiters to anonymise CVs before sending them to hiring managers in order to help prevent unconscious bias from affecting the recruitment process.
+The Anon CV tool allows recruiters to anonymise CVs before sending them to hiring managers in order to help prevent unconscious bias from affecting the recruitment process.
 
 The tool started life as a bespoke implementation tailored specifically to the needs of Publicis Groupe.
 
